@@ -1,6 +1,6 @@
 import numpy as np
-
-class Loss(object):
+from abc import ABC
+class Loss(ABC):
     def forward(self, y, yhat):
         pass
 

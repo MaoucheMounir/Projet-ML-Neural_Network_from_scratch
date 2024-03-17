@@ -1,6 +1,7 @@
 import numpy as np
+from abc import ABC
 
-class Module(object):
+class Module(ABC):
     def __init__(self):
         self._parameters = None
         self._gradient = None
