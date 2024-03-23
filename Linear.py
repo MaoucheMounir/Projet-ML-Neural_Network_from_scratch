@@ -14,7 +14,7 @@ class Linear(Module):
         """
         
         self._parameters = np.full((input, output), 100, dtype=float)
-        self._gradient = np.zeros((input, 1))  #Car le gradient est de la forme nb_entrée *nb_sorties, et la loss a une seule sortie
+        self._gradient = np.zeros((input, output))  #Car le gradient est de la forme nb_entrée*nb_sorties, et la loss a 1 seule sortie
         
     def forward(self, X):
         """Calcule la sortie à partir de X
@@ -36,23 +36,26 @@ class Linear(Module):
 
     def backward_update_gradient(self, input, delta):
         ## 
-        """Met a jour la valeur du gradient
+        """Calcule le gradient de la loss p.r aux paramètres
+            et Met a jour la valeur du gradient
 
         Args:
-            input (_type_): _description_
-            delta ( np.array((np_sorties_couche_courante,)) ): 
+            input (_type_): Les entrée du module
+            delta ( np.array((nb_sorties_couche_courante,)) ): 
         """
-        #la dérivée des sorties du module p.r aux parametres est l'input du module
+        # la dérivée des sorties du module p.r aux parametres est l'input du module
         # La somme sur les k sorties se fait dans le produit matriciel
         # input=X car la dérivée se fait par rapport aux paramètres W
         self._gradient += np.dot(input.T, delta)  
-        
+    
     def backward_delta(self, input, delta):
-        ## Calcul la derivee de l'erreur
-        # input=Z-1 car la dérivée se fait par rapport aux Z de la couche precédente
-        return np.dot(input.T, delta)
+        ## Calcul la derivee de l'erreur p.r aux entrées (sorties du module précédent)
+        # input=Z_h-1 car la dérivée se fait par rapport aux Z de la couche precédente
+        # Ca va être le delta qu'on va transmettre à la couche précédente
+        # delta de la forme output*dim_loss (1 pour l'instant)
+        return np.dot(delta, self._parameters.T)
     
     
-        
     
-        
+    
+    
