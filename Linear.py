@@ -13,7 +13,7 @@ class Linear(Module):
         Penser à eut etre ajouter le biais
         """
         
-        self._parameters = np.full((input, output), 100, dtype=float)
+        self._parameters = np.random.rand(input, output)*100
         self._gradient = np.zeros((input, output))  #Car le gradient est de la forme nb_entrée*nb_sorties, et la loss a 1 seule sortie
         
     def forward(self, X):
