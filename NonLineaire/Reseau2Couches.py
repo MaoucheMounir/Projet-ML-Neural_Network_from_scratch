@@ -1,7 +1,7 @@
-from Linear import Linear 
-from Tanh import Tanh
-from MSELoss import MSELoss
-from Sigmoide import Sigmoide
+from Lineaire.Linear import Linear 
+from NonLineaire.Tanh import Tanh
+from Lineaire.MSELoss import MSELoss
+from NonLineaire.Sigmoide import Sigmoide
 
 import numpy as np
 from matplotlib import pyplot as plt
@@ -41,8 +41,7 @@ class Reseau2Couches():
 
         self.couts.append(self.mse_loss.forward(datay, act_2))
         
-
-        for i in range(nb_iter):
+        for _ in range(nb_iter):
             # passe backward
             ## Calcul des deltas
             delta_1 = self.mse_loss.backward(datay, act_2)
