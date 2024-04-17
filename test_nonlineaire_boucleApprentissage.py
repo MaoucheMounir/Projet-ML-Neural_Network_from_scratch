@@ -16,6 +16,7 @@ from Encapsulation.Optim import Optim
 from Encapsulation.fonctions import SGD
 
 from icecream import ic
+
 size = 1000
 
 datax, datay = tl.gen_arti(centerx=1, centery=1, sigma=0.1, nbex=size, data_type=1, epsilon=0.1)

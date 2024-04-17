@@ -21,6 +21,7 @@ class Sequentiel(Module):
         self._outputs:list[np.ndarray] = []
         self.verifier_modules()
         self._deltas:list[np.ndarray] = []
+        
     
     def verifier_modules(self): ##!! A completer
         try:
@@ -136,3 +137,9 @@ class Sequentiel(Module):
         df = pd.DataFrame(list(zip(noms,parametres, gradients)), columns=['noms', 'parametres', 'gradients'])
         print(df)
         
+
+    def predict(self, X):
+        def pred(x):
+            return np.where(x >= 0.5,1, 0)
+
+        return pred(self.forward(X))
