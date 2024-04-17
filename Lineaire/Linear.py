@@ -30,6 +30,7 @@ class Linear(Module):
         
         
     def params(self, n,d,dat):
+        np.random.seed(5)
         if dat == 1:
             parameters = np.random.normal(0, 1, (n, d)) * np.sqrt(2 / (n + d))
         elif dat == 0:
@@ -84,7 +85,7 @@ class Linear(Module):
         # if self._gradient is not None:
         #     self.zero_grad()
         try:
-            self._gradient += np.dot(input.T, delta) 
+            self._gradient += np.dot(input.T, delta)
             #self._gradient += input.T @ delta 
             self._gradient_biais += np.sum(delta, axis=0)
             

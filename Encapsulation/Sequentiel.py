@@ -21,6 +21,7 @@ class Sequentiel(Module):
         self._outputs:list[np.ndarray] = []
         self.verifier_modules()
         self._deltas:list[np.ndarray] = []
+        self.iter = 0
         
     
     def verifier_modules(self): ##!! A completer
@@ -54,6 +55,7 @@ class Sequentiel(Module):
         for module in self._modules:
             module.update_parameters(gradient_step)
             module.zero_grad()
+        
     
     def backward_update_gradient(self, input, delta):
         ## 
@@ -109,6 +111,7 @@ class Sequentiel(Module):
         outputs_reversed = self._outputs[::-1]
         
         for i, module in enumerate(self._modules[::-1]):
+            
             module.backward_update_gradient(outputs_reversed[i+1], delta)
             delta=module.backward_delta(outputs_reversed[i+1], delta)
             

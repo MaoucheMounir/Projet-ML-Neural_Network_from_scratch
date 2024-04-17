@@ -34,8 +34,10 @@ class Optim():
         # self._net.backward_update_gradient(batch_x, gradient_loss)
         self._net.backward(batch_x, gradient_loss)
         self._net.update_parameters(self._eps)
-        self._couts.append(cout)
+        self._couts.append(cout.mean())
+        #self._net.describe_values()
         
     
     def score(self, X, Y):
-        return np.where(Y == self._net.forward(X), 1, 0).mean()
+        pred=np.where(self._net.forward(X)>=0.5,1,0)
+        return np.where(Y == pred, 1, 0).mean()

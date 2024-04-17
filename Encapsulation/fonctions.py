@@ -3,7 +3,7 @@ from Encapsulation.Optim import Optim
 from Abstract.Loss import Loss
 from icecream import ic
 
-def SGD(net, X:np.ndarray, Y:np.ndarray, taille_batch:int, loss:Loss, nb_epochs=10, eps:float=1e-5, shuffle:bool=False):
+def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, eps:float=1e-5, shuffle:bool=False):
     """Effectue la descente de gradient stochastique/batch.
 
     Args:
@@ -25,9 +25,10 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, taille_batch:int, loss:Loss, nb_epochs=
     X_Y = np.hstack((X, Y))
     
     if shuffle:
-        X_Y = np.random.shuffle(X_Y)
+        np.random.shuffle(X_Y)
+    
     optim = Optim(net, loss, eps)
-    batches = np.array_split(np.array(X_Y), taille_batch)
+    batches = np.array_split(np.array(X_Y), nb_batch)
     for epoch in range(nb_epochs):
         
         for batch in batches:
@@ -36,6 +37,6 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, taille_batch:int, loss:Loss, nb_epochs=
             batch_y = np.array([b[-1] for b in batch])
             
             optim.step(batch_x, batch_y)
-
-    return net, optim._couts, optim
+    
+    return optim._net, optim._couts, optim
     

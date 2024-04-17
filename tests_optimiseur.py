@@ -39,10 +39,14 @@ modul_tan = Tanh()
 l_loss=[]
 iter=1000
 
-net= Sequentiel(*[modul_lin1,modul_tan,modul_lin2,modul_sig])
+net = Sequentiel(*[modul_lin1,modul_tan,modul_lin2,modul_sig])
+opt = Optim(net, loss_mse, eps=1e-4)
 
-net, couts, opt = SGD(net, datax,datay,nb_batch=1, loss=loss_mse, nb_epochs=iter, eps=1e-3, shuffle=False)
+for _ in range(iter):
+    opt.step(datax, datay)
 
+couts = opt._couts
+ic(couts)
 print("accuracy : ", opt.score(datax,datay))
 
 fig,ax=plt.subplots(ncols=3,nrows=1,figsize=(20,5))
@@ -68,109 +72,4 @@ ax[2].set_xlabel("iter")
 ax[2].set_ylabel("mse")
 ax[2].set_title("variation de la mse")
 plt.show()
-
-
-
-print(len(couts))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# size = 1500
-
-# datax, datay = tl.gen_arti(centerx=1, centery=1, sigma=0.1, nbex=size, data_type=1, epsilon=0.1)
-# testx, testy = tl.gen_arti(centerx=1, centery=1, sigma=0.1, nbex=size, data_type=1, epsilon=0.1)
-
-
-# datay = np.where(datay==-1,0,1).reshape((-1,1))
-# testy = np.where(testy==-1,0,1).reshape((-1,1))
-
-
-# nh = 80
-# nh2 = 60
-
-# def pred(x):
-#     return np.where(x >= 0.5,1, 0)
-
-
-# loss_mse = MSELoss()
-# couche_lin = Linear( datax.shape[1], nh)
-# couche_lin2 = Linear(nh, nh2)
-# couche_lin3 = Linear(nh2, 1,)
-
-# sig = Sigmoide()
-# tan = Tanh()
-# ic.enable()
-# net = Sequentiel(*[couche_lin,tan,couche_lin2,tan,couche_lin3,sig])
-
-# #opt = Optim(net,loss_mse,eps=1e-4)
-# sizeba = 100
-# net, couts, opt = SGD(net, datax, datay, sizeba, loss_mse, nb_epochs=100, eps=1e-4)
-
-# print("accuracy : ", opt.score(testx,testy))
-
-
-# tl.plot_frontiere(testx, opt._net.predict, step=100)
-# tl.plot_data(testx, testy.reshape(-1))
-# plt.figure()
-# plt.plot(list(range(len(couts))),'black')
-# # plt.plot(std,'blue')
-# plt.legend(('Moyenne', 'Variance'))
-# plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
