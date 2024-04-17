@@ -37,14 +37,14 @@ modul_sig = Sigmoide()
 modul_tan = Tanh()
 
 l_loss=[]
-iter=1000
-eps = 1e-5
+iter=10000
+eps = 1e-4
 couts = []
 
 net = Sequentiel(*[modul_lin1,modul_tan,modul_lin2,modul_sig])
 
 for _ in range(iter):
-    net.describe_values()
+    #net.describe_values()
     output = net.forward(datax) #fait
     cout = loss_mse.forward(datay, output).mean() #fait
     

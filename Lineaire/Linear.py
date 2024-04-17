@@ -53,8 +53,8 @@ class Linear(Module):
         #input_dim = X.shape[1]
         assert X.shape[1] == self._input_dim
         
-        return np.dot(X, self._parameters)
-        #return X @ self._parameters + self._biais
+        #return np.dot(X, self._parameters)
+        return X @ self._parameters + self._biais
     
     def zero_grad(self) -> None:
         self._gradient = np.zeros(self._gradient.shape)
@@ -85,8 +85,8 @@ class Linear(Module):
         # if self._gradient is not None:
         #     self.zero_grad()
         try:
-            self._gradient += np.dot(input.T, delta)
-            #self._gradient += input.T @ delta 
+            #self._gradient += np.dot(input.T, delta)
+            self._gradient += input.T @ delta 
             self._gradient_biais += np.sum(delta, axis=0)
             
         except ValueError as e:
@@ -103,8 +103,8 @@ class Linear(Module):
         assert delta.shape[1] == self._output_dim # == self._parameters.shape[1] 
         assert delta.shape[0] == input.shape[0]
         
-        return np.dot(delta, self._parameters.T)
-        #return delta @ self._parameters.T
+        #return np.dot(delta, self._parameters.T)
+        return delta @ self._parameters.T
     
     def describe_shape(self):
             d = {'name':[self._name] , 'input_dim':[self._input_dim], 'output_dim':[self._output_dim]}

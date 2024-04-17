@@ -52,7 +52,7 @@ tools.plot_frontiere(datax,opt._net.predict,ax=ax[0])
 tools.plot_data(datax, datay,ax[0])
 ax[0].set_xlabel("x1")
 ax[0].set_ylabel("x2")
-ax[0].set_title(" frontiere de decison en app")
+ax[0].set_title("frontiere de decison en app")
 
 tools.plot_frontiere(testx,opt._net.predict,ax=ax[1])
 tools.plot_data(testx, testy,ax[1])
