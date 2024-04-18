@@ -1,19 +1,13 @@
-import src.mltools as tl
-from src import tools
 import numpy as np
-
-from sklearn import datasets, linear_model
-from sklearn.preprocessing import StandardScaler
-from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
-from Lineaire.Linear import *
-from Lineaire.MSELoss import *
-from NonLineaire.Tanh import Tanh
-from NonLineaire.Sigmoide import Sigmoide
-from Encapsulation.Sequentiel import Sequentiel
-from Encapsulation.Optim import Optim
-from Encapsulation.fonctions import SGD
+import utils.mltools as tl
+from utils import tools
+
+from Lineaire.Linear import Linear
+from Loss.MSELoss import MSELoss
+from Activation.Tanh import Tanh
+from Activation.Sigmoide import Sigmoide
 
 from icecream import ic
 

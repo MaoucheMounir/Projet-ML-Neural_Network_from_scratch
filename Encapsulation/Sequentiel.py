@@ -24,11 +24,18 @@ class Sequentiel(Module):
         self.iter = 0
         
     
-    def verifier_modules(self): ##!! A completer
-        try:
-            pass #Verifier les dimensions
-        except:
-            raise ValueError('dimns incompatibles')
+    def verifier_modules(self): 
+        modules_lineaires = [module for module in self._modules if module._parameters is not None]
+        for i in range(len(modules_lineaires)-1):
+            #ic(self._modules[i]._output_dim, self._modules[i+1]._input_dim)
+            
+            if modules_lineaires[i]._output_dim != modules_lineaires[i+1]._input_dim:
+                raise Exception(f'Erreur de dimensions. Les modules {i} {modules_lineaires[i]._name} et {i+1} {modules_lineaires[i+1]._name} ont des dimensions incompatibles')
+        # try:
+        #     #Verifier les dimensions
+            
+        # except:
+        #     raise ValueError('dimns incompatibles')
     
     def forward(self, X:np.ndarray):
         """Calcule la sortie à partir de X

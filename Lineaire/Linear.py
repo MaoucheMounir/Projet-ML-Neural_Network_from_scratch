@@ -51,8 +51,11 @@ class Linear(Module):
             X (:np.ndarray): Les entrées du module
         """
         #input_dim = X.shape[1]
-        assert X.shape[1] == self._input_dim
-        
+        try:
+            assert X.shape[1] == self._input_dim
+        except AssertionError as e:
+            print(f'Le nombre de neurones de {self._name} est incompatible avec la dimension des entrées ({X.shape[1]})'.format(e))
+            
         #return np.dot(X, self._parameters)
         return X @ self._parameters + self._biais
     
