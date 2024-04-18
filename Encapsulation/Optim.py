@@ -38,6 +38,5 @@ class Optim():
         #self._net.describe_values()
         
     
-    def score(self, X, Y):
-        pred=np.where(self._net.forward(X)>=0.5,1,0)
+    def score(self, Y, pred):
         return np.where(Y == pred, 1, 0).mean()

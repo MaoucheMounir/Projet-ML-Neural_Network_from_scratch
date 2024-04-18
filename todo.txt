@@ -1,0 +1,4 @@
+Arranger predict (sur mesure sigmoide)
+confirmer pourquoi derivee de CELoss est yhat-y et pas -y
+SGD le reshape((-1,1)) faudrait le faire à l'exterieur pour pouvoir generaliser avec multiclasse
+se mettre d'accord sur les fonctions pred dans tests optimiseur etc

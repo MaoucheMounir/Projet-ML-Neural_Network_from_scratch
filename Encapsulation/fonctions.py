@@ -21,7 +21,8 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, 
         net : Le réseau de neurones entraîné
     """
     
-    Y = np.reshape(Y, (-1, 1))
+    #Y = np.reshape(Y, (-1, 1))
+
     X_Y = np.hstack((X, Y))
     
     if shuffle:
@@ -33,8 +34,8 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, 
         
         for batch in batches:
             
-            batch_x = np.array([b[:-1] for b in batch])
-            batch_y = np.array([b[-1] for b in batch])
+            batch_x = np.array([b[:-Y.shape[1]] for b in batch]) #Modifié ca, c'etait -1, pour généraliser
+            batch_y = np.array([b[-Y.shape[1]:] for b in batch])
             
             optim.step(batch_x, batch_y)
     
