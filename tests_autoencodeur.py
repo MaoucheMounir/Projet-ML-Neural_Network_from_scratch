@@ -16,7 +16,6 @@ from utils import tools
 
 from icecream import ic
 
-size =1000
 np.random.seed(5)
 
 
@@ -29,7 +28,7 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 
 
-loss_mse = BCELoss()
+loss_bce = BCELoss()
 lineaire1 = Linear(X_train.shape[1], 32, init_type=1)
 lineaire2 = Linear(32, 8, init_type=1)
 lineaire3 = Linear(8, 32, init_type=1)
@@ -43,27 +42,28 @@ iter=100
 
 net = AutoEncodeur(lineaire1, tanh, lineaire2, tanh2, lineaire3, tanh3, lineaire4, sig)
 #net = Sequentiel(lineaire1, tanh, lineaire4, sig)
-#opt = Optim(net, loss_mse)
 
-net, couts, opt = SGD(net, X_train, X_train,nb_batch=10, loss=loss_mse, nb_epochs=iter, eps=1e-1, shuffle=True)
+net, couts, opt = SGD(net, X_train, X_train,nb_batch=10, loss=loss_bce, nb_epochs=iter, eps=1e-1, shuffle=True)
 
 i = 0
-def predict(i):
-    plt.figure(figsize=(10, 5))  # Ajustez la taille de la figure selon vos besoins
-    plt.title(f'classe = {digits.target[i]}')
+def predict(i, X, Y):
+    dim = int(np.sqrt(X.shape[1]))
+    
+    plt.figure(figsize=(5, 2))  # Ajustez la taille de la figure selon vos besoins
+    #plt.title(f'classe = {Y[i]}')
     
     plt.subplot(1, 2, 1)  # Première cellule de la grille
-    plt.imshow(digits.data[i].reshape((8,8)), cmap='grey')
-    plt.title('Image originale')
-    pred = opt._net.forward(digits.data[i].reshape((1,64)))
+    plt.imshow(X[i].reshape((dim,dim)), cmap='grey')
+    plt.title(f'Image originale ({Y[i]})')
+    pred = opt._net.forward(X[i].reshape((1,dim**2)))
     plt.subplot(1, 2, 2)  # Deuxième cellule de la grille
-    plt.imshow(pred.reshape((8,8)), cmap='grey')
+    plt.imshow(pred.reshape((dim,dim)), cmap='grey')
     plt.title('Image reconstruite')
     plt.show()
     #print('classe = ', y_train[i])
 
 for i in range(10):
-    predict(i)
+    predict(i, X_train, y_train)
 
 plt.plot(range(len(couts)), couts)
 plt.show()
