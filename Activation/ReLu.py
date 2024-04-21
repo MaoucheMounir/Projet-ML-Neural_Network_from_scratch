@@ -1,31 +1,29 @@
 from Abstract.Module import Module
 import numpy as np
-    
+from icecream import ic
 
-class ReLu(Module):
-    def __init__(self,threshold=0.):
+class ReLU(Module):
+    def __init__(self,threshold=0.0, name='ReLU'):
+        super().__init__()
+        self._name = name
         self._threshold=threshold
-
-    def forward(self, X):
-        self._forward=self.threshold(X)
-        return self._forward
 
     def zero_grad(self):
         pass
-    
-    def update_parameters(self, gradient_step=1e-3):
-        pass
 
-    def backward_update_gradient(self, input:np.ndarray, delta:np.ndarray):
-        pass
-
-    def threshold(self,input):
-        return np.where(input>self._threshold,input,0.)
-
-    def derivative_Threshold(self,input):
-        #Batch x out
+    def forward(self, X):
+        return np.where(X>self._threshold,X,0.0)
+        
+    def derivee(self,input):
         return (input > self._threshold).astype(float)
 
+    def backward_update_gradient(self, input, delta) -> None:
+        pass
+    
+    def update_parameters(self, gradient_step=0.001) -> None:
+        pass
+
     def backward_delta(self, input, delta):
-        self._delta=np.multiply(delta,self.derivative_Threshold(input))
-        return self._delta
+        return np.multiply(delta, self.derivee(input))
+        
+

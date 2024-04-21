@@ -56,7 +56,6 @@ class Linear(Module):
         except AssertionError as e:
             print(f'Le nombre de neurones de {self._name} est incompatible avec la dimension des entrées ({X.shape[1]})'.format(e))
             
-        #return np.dot(X, self._parameters)
         return X @ self._parameters + self._biais
     
     def zero_grad(self) -> None:
@@ -85,10 +84,8 @@ class Linear(Module):
         assert input.shape[1] == self._input_dim
         assert delta.shape[1] == self._output_dim # == self._parameters.shape[1] 
         assert delta.shape[0] == input.shape[0] 
-        # if self._gradient is not None:
-        #     self.zero_grad()
+        
         try:
-            #self._gradient += np.dot(input.T, delta)
             self._gradient += input.T @ delta 
             self._gradient_biais += np.sum(delta, axis=0)
             
@@ -106,7 +103,6 @@ class Linear(Module):
         assert delta.shape[1] == self._output_dim # == self._parameters.shape[1] 
         assert delta.shape[0] == input.shape[0]
         
-        #return np.dot(delta, self._parameters.T)
         return delta @ self._parameters.T
     
     def describe_shape(self):

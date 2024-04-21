@@ -137,7 +137,15 @@ class AutoEncodeur(Sequentiel):
             module.backward_update_gradient(outputs_reversed[i+1], delta)
             delta=module.backward_delta(outputs_reversed[i+1], delta)
             
-        
+    
+    def get_representation_latente(self, input):
+        output = self._modules[0].forward(input)
+        i=1
+        while (self._modules[i]._output_dim is None) or (output.shape[1] > self._modules[i]._output_dim):
+            output = self._modules[i].forward(output)
+            i +=1 
+        return output
+    
     # def predict(self, X):
     #     return np.where(self.forward(X)>=0.5, 1, 0)
     

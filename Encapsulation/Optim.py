@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 
 from Abstract.Loss import Loss
 from Lineaire.Linear import Linear
@@ -22,6 +23,7 @@ class Optim():
         """
         
         self._net:Sequentiel|Linear = net
+        self._net.zero_grad()
         self._loss:Loss = loss 
         self._eps:float = eps
         self._couts:list[float] = []
@@ -62,7 +64,6 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, 
     """
     
     #Y = np.reshape(Y, (-1, 1))
-    ic(X.shape, Y.shape)
     X_Y = np.hstack((X, Y))
     
     if shuffle:
@@ -70,7 +71,7 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, 
     
     optim = Optim(net, loss, eps)
     batches = np.array_split(np.array(X_Y), nb_batch)
-    for _ in range(nb_epochs):
+    for _ in tqdm(range(nb_epochs)):
         
         for batch in batches:
             

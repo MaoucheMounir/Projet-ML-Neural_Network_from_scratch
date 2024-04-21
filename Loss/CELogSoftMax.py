@@ -14,8 +14,10 @@ class CELogSoftMax(Loss):
         if len(y.shape) == 1:
             y = y.reshape(-1, 1)
         
-        assert y.shape == yhat.shape
-        
+        try:
+            assert y.shape == yhat.shape
+        except AssertionError as e:
+            print(f'Les dimensiosn de y {y.shape} et yhat {yhat.shape} sont incompatibles')
         eps = 1e-8  # Pour éviter le log de zero
         yhat_truey = np.sum(yhat*y, axis=1)
         
