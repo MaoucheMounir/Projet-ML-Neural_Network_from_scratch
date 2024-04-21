@@ -1,10 +1,12 @@
-Arranger predict (sur mesure sigmoide)
-confirmer pourquoi derivee de CELoss est yhat-y et pas -y
-SGD le reshape((-1,1)) faudrait le faire à l'exterieur pour pouvoir generaliser avec multiclasse
-se mettre d'accord sur les fonctions pred dans tests optimiseur etc
+Arranger predict (sur mesure sigmoide) [1]
+
+confirmer pourquoi derivee de CELoss est yhat-y et pas -y (avec prof)
+
+SGD le reshape((-1,1)) faudrait le faire à l'exterieur pour pouvoir generaliser avec multiclasse [1]
+se mettre d'accord sur les fonctions pred dans tests optimiseur etc [1]
 
 Rapport : Arranger plot linéaire (ticks), et éventuellement à uniformiser les graphes (couleur, titre...)
             Peut etre ajouter pour multi classes les images avec leurs prédictions comme Sabrina
             Autoencodeurs
 
-Reexecuter les autoencodeurs (configs) (1 fait)
+Arranger les evaluations des différentes configs, peut etre les mettre dans des logs [3]
