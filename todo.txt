@@ -1,6 +1,9 @@
-Arranger predict (sur mesure sigmoide) [1]
-
+## Questions:
+Quand on a plusieurs dimensions dans la supervision, la loss retourne une ou plusieurs sorties?
 confirmer pourquoi derivee de CELoss est yhat-y et pas -y (avec prof)
+
+## A faire
+Arranger predict (sur mesure sigmoide) [1]
 
 SGD le reshape((-1,1)) faudrait le faire à l'exterieur pour pouvoir generaliser avec multiclasse [1]
 se mettre d'accord sur les fonctions pred dans tests optimiseur etc [1]
