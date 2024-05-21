@@ -2,6 +2,9 @@ import numpy as np
 from Abstract.Module import *
 from icecream import ic
 import pandas as pd
+import os
+
+os.chdir('..')
 
 class Sequentiel(Module):
     
@@ -19,7 +22,7 @@ class Sequentiel(Module):
         self._modules:list[Module] = list(args)
         
         self._outputs:list[np.ndarray] = []
-        self.verifier_modules()
+        #self.verifier_modules()
         self._deltas:list[np.ndarray] = []
         self.iter = 0
         

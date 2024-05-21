@@ -2,6 +2,7 @@ import numpy as np
 #from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib import cm
+
 # from keras.datasets import mnist
 
 def plot_data(data,labels=None,ax=plt):
@@ -116,6 +117,23 @@ def params(n,d,dat):
 
 ###########################################################################################################################
 
+
+def pred_classes(y_hat):
+    """Retourne les classes à prédire à partir des probabilités
+
+    Args:
+        y_hat : Vecteurs one-hot
+
+    Returns:
+        Vecteurs de classes (int)
+    """
+    # Juste un reshape pour avoir une matrice avec une ligne si jamais on a un vecteur des probas d'un seul exemple
+    if len(y_hat.shape) == 1:
+        y_hat = y_hat.reshape((1,-1))
+    
+    return  np.argmax(y_hat, axis=1)
+    
+
 def print_image(X,Y,net,size,n):
     fig,ax=plt.subplots(nrows=np.math.ceil( size/4 ),ncols=4,figsize=(20,5))
     ax=ax.flatten()
@@ -124,7 +142,7 @@ def print_image(X,Y,net,size,n):
     fig.tight_layout()
 
     for pos,i in enumerate(choice) :
-        y_hat=net.predict(np.array([X[i]])) 
+        y_hat= pred_classes(net.predict(np.array([X[i]]))) #np.where(net.predict(np.array([X[i]])) == 1)[0].item()  # a la base y_hat=net.predict(np.array([X[i]])
         ax[pos].imshow(X[i].reshape((n,n)),interpolation="nearest",cmap="gray")
         ax[pos].set_title(f'classe predit {y_hat[0]} / vrai class {Y[i]}')
         ax[pos].set_axis_off()

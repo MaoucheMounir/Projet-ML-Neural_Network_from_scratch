@@ -16,7 +16,7 @@ class CELoss(Loss):
         
         assert y.shape == yhat.shape
 
-        yhat_truey = np.sum(yhat*y, axis=1)
+        yhat_truey =  1 - np.sum(yhat*y, axis=1)
         
         return -yhat_truey 
 

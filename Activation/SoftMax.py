@@ -8,17 +8,17 @@ class SoftMax(Module):
         self._name = name
         
     def forward(self, input:np.ndarray) -> float:
-        
-        
-        
-        #exp = np.exp(np.sum(yhat*y, axis=1))
-        y_hat_exp = np.exp(input)
-        sums = np.sum(y_hat_exp, axis=1)
-        nb_colonnes = input.shape[1]
-        sums_repetitions = np.repeat(sums[:, np.newaxis], nb_colonnes, axis=1)
+
+        # #exp = np.exp(np.sum(yhat*y, axis=1))
+        # y_hat_exp = np.exp(input)
+        # sums = np.sum(y_hat_exp, axis=1)
+        # nb_colonnes = input.shape[1]
+        # sums_repetitions = np.repeat(sums[:, np.newaxis], nb_colonnes, axis=1)
+        e = np.exp(input)
+        return e / np.sum(e, axis=1).reshape((-1, 1))
 
         
-        return  y_hat_exp / sums_repetitions
+        #return  y_hat_exp / sums_repetitions
         #return y_hat_exp / np.sum(y_hat_exp, axis=1)
 
     def zero_grad(self):

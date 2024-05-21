@@ -3,13 +3,24 @@ Quand on a plusieurs dimensions dans la supervision, la loss retourne une ou plu
 confirmer pourquoi derivee de CELoss est yhat-y et pas -y (avec prof)
 
 ## A faire
+Code:
 Arranger predict (sur mesure sigmoide) [1]
 
 SGD le reshape((-1,1)) faudrait le faire à l'exterieur pour pouvoir generaliser avec multiclasse [1]
 se mettre d'accord sur les fonctions pred dans tests optimiseur etc [1]
 
-Rapport : Arranger plot linéaire (ticks), et éventuellement à uniformiser les graphes (couleur, titre...)
+Arranger les evaluations des différentes configs, peut etre les mettre dans des logs [3]
+
+Le prof a dit prendre un problème et l'expérimenter (scalabilité, desc de gradient...)
+
+
+Rapport : 
+
+Arranger plot linéaire (ticks), et éventuellement à uniformiser les graphes (couleur, titre...)
             Peut etre ajouter pour multi classes les images avec leurs prédictions comme Sabrina
             Autoencodeurs
 
-Arranger les evaluations des différentes configs, peut etre les mettre dans des logs [3]
+
+Ajouter une rubrique pour lesloss (MSE, BCE) ou en parler ponctuellement ?
+	T-SNE : interpreter et verifier que les images ont le meme nombre d'exemple
+Ajouter conclusion et perspectives
