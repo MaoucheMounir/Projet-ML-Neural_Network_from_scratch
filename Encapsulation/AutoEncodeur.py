@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 
 from Encapsulation.Sequentiel import Sequentiel
-from icecream import ic
 
 
 class AutoEncodeur(Sequentiel):
@@ -20,7 +19,7 @@ class AutoEncodeur(Sequentiel):
         super().__init__(*args)
     
     
-    def verifier_modules(self): ##!! A completer
+    def verifier_modules(self): 
         super().verifier_modules()
                 
         def is_convex(l:list[int])->bool:
@@ -145,9 +144,6 @@ class AutoEncodeur(Sequentiel):
             output = self._modules[i].forward(output)
             i +=1 
         return output
-    
-    # def predict(self, X):
-    #     return np.where(self.forward(X)>=0.5, 1, 0)
     
     def reset(self):
         for module in self._modules:

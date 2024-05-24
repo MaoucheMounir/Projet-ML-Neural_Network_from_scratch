@@ -24,3 +24,10 @@ Arranger plot linéaire (ticks), et éventuellement à uniformiser les graphes (
 Ajouter une rubrique pour lesloss (MSE, BCE) ou en parler ponctuellement ?
 	T-SNE : interpreter et verifier que les images ont le meme nombre d'exemple
 Ajouter conclusion et perspectives
+
+
+
+
+
+=================================mardi 21 05==================================
+autoencodeurs completer verifier modules

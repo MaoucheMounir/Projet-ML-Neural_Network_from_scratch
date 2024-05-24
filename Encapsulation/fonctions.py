@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import sys
-sys.path.append('C:/_TME/Projet-ML')
+import os
+os.chdir('..')
+
 from utils import tools
 
 def evaluate_encapsulation(opt, datax, datay, testx, testy) :

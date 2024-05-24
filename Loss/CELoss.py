@@ -9,8 +9,6 @@ class CELoss(Loss):
         
     def forward(self, y:np.ndarray, yhat:np.ndarray) -> float:
         
-        # y_hat_truey + sum(exp(y_hat_i)) sur toutes les classes
-        
         if len(y.shape) == 1:
             y = y.reshape(-1, 1)
         
@@ -34,8 +32,6 @@ class CELoss(Loss):
             y = y.reshape(-1, 1)
             
         assert y.shape == yhat.shape
-        
-        #return yhat*yhat_exp / np.sum(yhat_exp, axis=1).reshape((-1,1)) - y
         
         return yhat-y
         

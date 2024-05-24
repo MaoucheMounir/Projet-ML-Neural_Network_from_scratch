@@ -23,7 +23,7 @@ from Activation.SoftMax import  SoftMax
 from Loss.CELogSoftMax import CELogSoftMax
 from Loss.CELoss import CELoss
 
-from convolution import *
+from Convolution.convolution1D import *
 
 from utils import tools
 from Encapsulation import fonctions as fn

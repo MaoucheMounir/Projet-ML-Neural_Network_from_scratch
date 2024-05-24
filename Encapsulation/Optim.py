@@ -29,16 +29,14 @@ class Optim():
         self._couts:list[float] = []
     
     def step(self, batch_x:np.ndarray, batch_y:np.ndarray):
-        output:np.ndarray = self._net.forward(batch_x) #fait
-        cout:float = self._loss.forward(batch_y, output) #fait
-        gradient_loss:np.ndarray = self._loss.backward(batch_y, output) # fait, de taille (100,1)
+        output:np.ndarray = self._net.forward(batch_x) 
+        cout:float = self._loss.forward(batch_y, output)
+        gradient_loss:np.ndarray = self._loss.backward(batch_y, output)
         
-        # self._net.backward_delta(batch_x, gradient_loss)
-        # self._net.backward_update_gradient(batch_x, gradient_loss)
         self._net.backward(batch_x, gradient_loss)
         self._net.update_parameters(self._eps)
         self._couts.append(cout.mean())
-        #self._net.describe_values()
+        
         
     
     def score(self, Y, pred):
@@ -81,7 +79,7 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, 
         
         for batch in batches:
             
-            batch_x = np.array([b[:-Y.shape[1]] for b in batch]) #Modifié ca, c'etait -1, pour généraliser
+            batch_x = np.array([b[:-Y.shape[1]] for b in batch]) 
             batch_y = np.array([b[-Y.shape[1]:] for b in batch])
             
             batch_y = np.squeeze(batch_y)

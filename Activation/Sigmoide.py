@@ -24,8 +24,7 @@ class Sigmoide(Module):
         # input=Z_h-1 car la dérivée se fait par rapport aux Z de la couche precédente
         # Ca va être le delta qu'on va transmettre à la couche précédente
         # delta de la forme output*dim_loss (1 pour l'instant)
-        # print(self.forward(input))
-        # print(self.forward(input)*(1-self.forward(input)))
+        
         assert delta.shape == input.shape
         return delta * (self.forward(input)*(1-self.forward(input)))
     

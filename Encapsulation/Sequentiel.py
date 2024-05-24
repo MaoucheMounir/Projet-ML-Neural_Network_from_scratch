@@ -1,5 +1,6 @@
 import numpy as np
 from Abstract.Module import *
+from Lineaire import Linear
 from icecream import ic
 import pandas as pd
 import os
@@ -22,23 +23,18 @@ class Sequentiel(Module):
         self._modules:list[Module] = list(args)
         
         self._outputs:list[np.ndarray] = []
-        #self.verifier_modules()
+        self.verifier_modules()
         self._deltas:list[np.ndarray] = []
         self.iter = 0
         
     
     def verifier_modules(self): 
-        modules_lineaires = [module for module in self._modules if module._parameters is not None]
+        modules_lineaires = [module for module in self._modules if isinstance(module._parameters, Linear)]  #if module._parameters is not None
         for i in range(len(modules_lineaires)-1):
-            #ic(self._modules[i]._output_dim, self._modules[i+1]._input_dim)
             
-            if modules_lineaires[i]._output_dim != modules_lineaires[i+1]._input_dim:
+            if (modules_lineaires[i]._output_dim != modules_lineaires[i+1]._input_dim) :
                 raise Exception(f'Erreur de dimensions. Les modules {i} {modules_lineaires[i]._name} et {i+1} {modules_lineaires[i+1]._name} ont des dimensions incompatibles')
-        # try:
-        #     #Verifier les dimensions
-            
-        # except:
-        #     raise ValueError('dimns incompatibles')
+
     
     def forward(self, X:np.ndarray):
         """Calcule la sortie à partir de X
@@ -60,15 +56,12 @@ class Sequentiel(Module):
     
     def update_parameters(self, gradient_step=1e-3):
         ## Calcule la mise a jour des parametres selon le gradient calcule et le pas de gradient_step
-        #self._parameters -= gradient_step*self._gradient
-        
         for module in self._modules:
             module.update_parameters(gradient_step)
             module.zero_grad()
         
     
     def backward_update_gradient(self, input, delta):
-        ## 
         """Calcule le gradient de la loss p.r aux paramètres
             et Met a jour la valeur du gradient
 
@@ -79,7 +72,6 @@ class Sequentiel(Module):
         # la dérivée des sorties du module p.r aux parametres est l'input du module
         # La somme sur les k sorties se fait dans le produit matriciel
         # input=X car la dérivée se fait par rapport aux paramètres W
-        #self._gradient += np.dot(input.T, delta)  
         
         outputs_reversed = self._outputs[::-1]
         
@@ -91,7 +83,6 @@ class Sequentiel(Module):
         # input=Z_h-1 car la dérivée se fait par rapport aux Z de la couche precédente
         # Ca va être le delta qu'on va transmettre à la couche précédente
         # delta de la forme output*dim_loss (1 pour l'instant)
-        #return np.dot(delta, self._parameters.T)
         
         delta_local = delta
         self._deltas.append(delta_local)
@@ -99,7 +90,7 @@ class Sequentiel(Module):
         
         for i, module in enumerate(self._modules[::-1]):
             delta_local = module.backward_delta(outputs_reversed[i+1], self._deltas[-1])
-            self._deltas.append(delta_local) # ii on a enlevé axis
+            self._deltas.append(delta_local) 
             
         #La liste des deltas est dans le sens inverse de celle des modules
     
@@ -116,7 +107,6 @@ class Sequentiel(Module):
         # la dérivée des sorties du module p.r aux parametres est l'input du module
         # La somme sur les k sorties se fait dans le produit matriciel
         # input=X car la dérivée se fait par rapport aux paramètres W
-        #self._gradient += np.dot(input.T, delta)  
         
         outputs_reversed = self._outputs[::-1]
         
@@ -126,9 +116,7 @@ class Sequentiel(Module):
             delta=module.backward_delta(outputs_reversed[i+1], delta)
             
         
-    # def predict(self, X):
-    #     return np.where(self.forward(X)>=0.5, 1, 0)
-    
+
     def reset(self):
         for module in self._modules:
             module.reset()
