@@ -1,7 +1,7 @@
 import numpy as np
-from Abstract.Module import *
 from pandas import DataFrame
-from icecream import ic
+
+from Abstract.Module import *
 
 class Linear(Module):
     

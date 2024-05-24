@@ -1,11 +1,8 @@
 import numpy as np
-from Abstract.Module import *
-from Lineaire import Linear
-from icecream import ic
 import pandas as pd
-import os
 
-os.chdir('..')
+from Abstract.Module import *
+from Lineaire.Linear import *
 
 class Sequentiel(Module):
     
@@ -29,7 +26,12 @@ class Sequentiel(Module):
         
     
     def verifier_modules(self): 
-        modules_lineaires = [module for module in self._modules if isinstance(module._parameters, Linear)]  #if module._parameters is not None
+        # for i, module in enumerate(self._modules):
+        #     print(type(module), i)
+        #     print("//////////")
+        #     print(isinstance(module, Linear.Linear))
+            
+        modules_lineaires = [module for module in self._modules if isinstance(module, Linear)]  #if module._parameters is not None
         for i in range(len(modules_lineaires)-1):
             
             if (modules_lineaires[i]._output_dim != modules_lineaires[i+1]._input_dim) :
@@ -144,3 +146,4 @@ class Sequentiel(Module):
             return np.where(x >= 0.5,1, 0)
 
         return pred(self.forward(X))
+    

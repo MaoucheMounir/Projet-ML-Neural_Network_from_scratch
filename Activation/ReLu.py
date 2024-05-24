@@ -1,6 +1,5 @@
 from Abstract.Module import Module
 import numpy as np
-from icecream import ic
 
 class ReLU(Module):
     def __init__(self, threshold=0, name='ReLU'):

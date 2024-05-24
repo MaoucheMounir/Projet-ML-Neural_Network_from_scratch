@@ -1,6 +1,6 @@
-from Abstract.Loss import Loss
 import numpy as np
-from icecream import ic
+from Abstract.Loss import Loss
+
 class CELogSoftMax(Loss):
     
     def __init__(self, name='CELogSoftMax'):
