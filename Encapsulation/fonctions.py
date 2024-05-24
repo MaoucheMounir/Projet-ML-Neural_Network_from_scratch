@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import os
-os.chdir('..')
+
 
 from utils import tools
 
@@ -122,20 +121,8 @@ def afficher_images_cluster(groupe_df_cluster, X, Y):
 
 ######################################
 
-def transform_one_hot_vector(classe):
-    """Retourne l'encodage one-hot d'une classe
 
-    Args:
-        classe (int): Le numéro de la classe
-
-    Returns:
-        Le vecteur one-hot de la classe
-    """
-    a =  np.zeros(10)
-    a[classe] = 1
-    return a
-
-def transform_one_hot(Y):
+def transform_one_hot(y):
     """Transforme l'ensemble des labels en vecteurs one-hot
 
     Args:
@@ -144,10 +131,10 @@ def transform_one_hot(Y):
     Returns:
         Matrice des labels one-hot
     """
-    one_hot_vectors = []
-    for yi in Y:
-        one_hot_vectors.append(transform_one_hot_vector(yi))
-    return np.array(one_hot_vectors)
+    one_hot_vectors = np.zeros((y.shape[0], np.max(y)+1))
+    one_hot_vectors[np.arange(y.shape[0]), y] = 1
+    
+    return one_hot_vectors
 
 def pred_classes(y_hat):
     """Retourne les classes à prédire à partir des probabilités

@@ -1,21 +1,19 @@
 from Abstract import Module
 import numpy as np
 
-
-
 class Conv2D():
     def __init__(self, k_size, chan_in, chan_out, stride=1, bias=True):
         self.k_size=k_size
         self.chan_in=chan_in
         self.chan_out=chan_out
         self.stride=stride
-        b=1 / np.sqrt(k_size)
+        b = 1 / np.sqrt(k_size)
         
         self._parameters = np.random.uniform(-b, b, (k_size,k_size,chan_in,chan_out))
-        self._gradient=np.zeros(self._parameters.shape)
+        self._gradient = np.zeros(self._parameters.shape)
         self.bias = bias
         if(self.bias):
-            self._bias=np.random.uniform(-b, b, chan_out)
+            self._bias = np.random.uniform(-b, b, chan_out)
             self._gradBias = np.zeros((chan_out))
 
     def zero_grad(self):
@@ -75,7 +73,6 @@ class Conv2D():
         self._delta=out
         return self._delta
 
-
 class MaxPool2D():
 
     def __init__(self, k_size=3, stride=1):
@@ -123,38 +120,4 @@ class MaxPool2D():
         pass
 
 
-class Flatten():
-
-    def __init__(self):
-        self._parameters = None
-        
-    
-    def zero_grad(self):
-        pass
-
-    def forward(self, X):
-        """
-        Args :
-            X:(batch,input,chan_in)
-            out:(batch,input*chan_in)
-        """
-        return X.reshape(X.shape[0], -1)
-        
-
-    def update_parameters(self, gradient_step=1e-3):
-        pass
-
-    def backward_delta(self, input, delta):
-        """
-        Args :
-            input: (batch,input,chan_in)
-            delta: (batch, input * chan_in)
-            out: (batch,input,chan_in)
-        """
-        self._delta = delta.reshape(input.shape)
-        return self._delta
-    
-    def backward_update_gradient(self, input, delta):
-        pass
-    
 

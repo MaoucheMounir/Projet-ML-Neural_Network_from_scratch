@@ -63,37 +63,28 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, 
     ic(X.shape)
     ic(Y.shape)
     #Y = np.reshape(Y, (-1, 1))
-    # if ((d := len(X.shape) != len(Y.shape)) != 0):  # Dans le cas de la convolution, on a eu une erreurall the input arrays must have same number of dimensions, but the array at index 0 has 3 dimension(s) and the array at index 1 has 2 dimension(s) (X= (5000, 26,1) et Y = (500,10))
-    #                                     #Il faut quand meme verifier la taille de la nouvelle dimension cas ou on a 3 canaux et pas juste 1 
-    #     for i in range(d):
-    #         Y = np.expand_dims(Y, len(Y.shape)+i)
+    if ((d := len(X.shape) != len(Y.shape)) != 0):  # Dans le cas de la convolution, on a eu une erreurall the input arrays must have same number of dimensions, but the array at index 0 has 3 dimension(s) and the array at index 1 has 2 dimension(s) (X= (5000, 26,1) et Y = (500,10))
+                                        #Il faut quand meme verifier la taille de la nouvelle dimension cas ou on a 3 canaux et pas juste 1 
+        for i in range(d):
+            Y = np.expand_dims(Y, len(Y.shape)+i)
     
-    #X_Y = np.hstack((X, Y))
+    X_Y = np.hstack((X, Y))
     
-    #if shuffle:
-    #    np.random.shuffle(X_Y)
-    
-    indices = np.arange(X.shape[0])
-
-    if shuffle :
-        np.random.shuffle(indices)
-
-    #deviser les indexe en nb_bloc
-    batches_indices = np.array_split(indices, nb_batch)
-    
+    if shuffle:
+        np.random.shuffle(X_Y)
     
     optim = Optim(net, loss, eps)
-    #batches = np.array_split(np.array(X_Y), nb_batch)
+    batches = np.array_split(np.array(X_Y), nb_batch)
     for _ in tqdm(range(nb_epochs)):
         
-        for batch in batches_indices:
+        for batch in batches:
             
-            # batch_x = np.array([b[:-Y.shape[1]] for b in batch]) 
-            # batch_y = np.array([b[-Y.shape[1]:] for b in batch])
+            batch_x = np.array([b[:-Y.shape[1]] for b in batch]) 
+            batch_y = np.array([b[-Y.shape[1]:] for b in batch])
             
-            # batch_y = np.squeeze(batch_y)
+            batch_y = np.squeeze(batch_y)
             
-            optim.step(X[batch], Y[batch])
+            optim.step(batch_x, batch_y)
         
     
     return optim._net, optim._couts, optim
