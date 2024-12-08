@@ -1,5 +1,5 @@
-from Abstract.Loss import *
 import numpy as np
+from Abstract.Loss import *
 
 class BCELoss(Loss):
     

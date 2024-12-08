@@ -1,7 +1,7 @@
 from Lineaire.Linear import Linear 
-from NonLineaire.Tanh import Tanh
+from Activation.Tanh import Tanh
 from Loss.MSELoss import MSELoss
-from NonLineaire.Sigmoide import Sigmoide
+from Activation.Sigmoide import Sigmoide
 
 import numpy as np
 from matplotlib import pyplot as plt

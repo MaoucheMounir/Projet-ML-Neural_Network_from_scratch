@@ -5,7 +5,6 @@ from Abstract.Loss import Loss
 from Lineaire.Linear import Linear
 from Encapsulation.Sequentiel import Sequentiel
 
-from icecream import ic
 
 class Optim():
     
@@ -50,51 +49,33 @@ def SGD(net, X:np.ndarray, Y:np.ndarray, nb_batch:int, loss:Loss, nb_epochs=10, 
         net (Module): Le réseau de neurone ou le module
         X (np.ndarray): L'ensemble des exemples de train
         Y (np.ndarray): L'ensemble des labels de train
-        taille_batch (int): La taille de chaque batch
+        nb_batch (int): Le nombre de batchs
         loss (Function): La fonction de cout
-        nb_iter (int, optional): Nombre d'itérations. Defaults to 100.
+        nb_epochs (int, optional): Nombre d'itérations. Defaults to 100.
         eps (float, optional): Pas de gradient. Defaults to 1e-3.
         shuffle (bool, optional): Si permuter les exemples ou non. Defaults to False.
 
     Returns:
         optim._couts : La liste des couts calculés par l'optimiseur
-        net : Le réseau de neurones entraîné
+        optim.net : Le réseau de neurones entraîné
+        optim : l'optimiseur
     """
-    ic(X.shape)
-    ic(Y.shape)
-    #Y = np.reshape(Y, (-1, 1))
-    # if ((d := len(X.shape) != len(Y.shape)) != 0):  # Dans le cas de la convolution, on a eu une erreurall the input arrays must have same number of dimensions, but the array at index 0 has 3 dimension(s) and the array at index 1 has 2 dimension(s) (X= (5000, 26,1) et Y = (500,10))
-    #                                     #Il faut quand meme verifier la taille de la nouvelle dimension cas ou on a 3 canaux et pas juste 1 
-    #     for i in range(d):
-    #         Y = np.expand_dims(Y, len(Y.shape)+i)
-    
-    #X_Y = np.hstack((X, Y))
-    
-    #if shuffle:
-    #    np.random.shuffle(X_Y)
     
     indices = np.arange(X.shape[0])
 
     if shuffle :
         np.random.shuffle(indices)
 
-    #deviser les indexe en nb_bloc
+    #Séparer les indices en "nb_batch" sous-ensembles
     batches_indices = np.array_split(indices, nb_batch)
     
     
     optim = Optim(net, loss, eps)
-    #batches = np.array_split(np.array(X_Y), nb_batch)
+    
     for _ in tqdm(range(nb_epochs)):
         
         for batch in batches_indices:
-            
-            # batch_x = np.array([b[:-Y.shape[1]] for b in batch]) 
-            # batch_y = np.array([b[-Y.shape[1]:] for b in batch])
-            
-            # batch_y = np.squeeze(batch_y)
-            
             optim.step(X[batch], Y[batch])
         
-    
     return optim._net, optim._couts, optim
     
